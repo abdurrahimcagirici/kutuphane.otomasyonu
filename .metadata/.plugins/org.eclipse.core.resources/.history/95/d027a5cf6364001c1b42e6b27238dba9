@@ -1,0 +1,78 @@
+package application;
+
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.ResourceBundle;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
+
+public class KitapSilKontrol implements Initializable{
+
+    @FXML
+    private TextField ktpISBN;
+    
+    Connection baglanti;
+    PreparedStatement sorgu;
+    Alert alert;
+  
+
+    @FXML
+    void kitap_sil(ActionEvent event) {
+    	String kitap_isbn = ktpISBN.getText();
+    	
+    	try {
+    		sorgu = baglanti.prepareStatement("delete kitap_isbn where kitap_isbn =? ");
+			sorgu.setString(1, kitap_isbn);
+	    	int sonuç = sorgu.executeUpdate();
+	    	
+	    	if(sonuç==1) {
+	    		alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Silme");
+				alert.setHeaderText("Kitap silme iþlemi gerçekleþti.");
+				alert.show();
+				
+			}else {
+				alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Hata");
+				alert.setHeaderText("Kitap silme iþlemi gerçekleþtirilemedi...");
+				alert.show();
+
+				
+			}
+	    		 		
+    	}catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+    	
+    }
+    
+    @Override
+	public void initialize(URL location, ResourceBundle resources) {
+		try {
+			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+			baglanti = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-MKU963U\\SQLEXPRESS;database=kutuphane;integratedSecurity=true");
+			
+		} 
+		
+		catch (Exception e) {
+			alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Hata");
+			alert.setHeaderText("Veritabanýna baðlanýrken bir hata oluþtu...");
+			alert.show();
+
+			
+		}
+		
+	}
+    
+
+}

@@ -1,0 +1,91 @@
+package application;
+
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.ResourceBundle;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+
+public class KayitOlKontrol implements Initializable{
+	
+	@FXML
+    private TextField tfEMail;
+
+	@FXML
+    private AnchorPane anchorPane;
+
+    @FXML
+    private PasswordField pf_Sifre;
+
+    @FXML
+    private TextField tf_KA;
+    
+    Connection baglanti;
+    PreparedStatement sorgu;
+    Alert alert;
+
+
+    @FXML
+    void kullanici_ekle(ActionEvent event) {
+    	String k_adi = tf_KA.getText();
+    	String k_sifre = pf_Sifre.getText();
+    	String e_Mail = tfEMail.getText();
+    	try {
+			sorgu = baglanti.prepareStatement("insert into Kullanicilar (kullanici_adi,sifre,e_mail) values (?,?,?)");
+			sorgu.setString(1,k_adi);
+			sorgu.setString(2, k_sifre);
+			sorgu.setString(3, e_Mail);
+			int sonuc = sorgu.executeUpdate();
+			if(sonuc==1) {
+				alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Kayýt");
+				alert.setHeaderText("Kayýt gerçekleþti.");
+				alert.show();
+				
+			}else {
+				alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Hata");
+				alert.setHeaderText("Veritabanýna kayýt yaparken bir hata oluþtu...");
+				alert.show();
+
+				
+			}
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+    	
+
+    }
+
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		try {
+			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+			baglanti = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-MKU963U\\SQLEXPRESS;database=kutuphane;integratedSecurity=true");
+			
+		} 
+		
+		catch (Exception e) {
+			alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Hata");
+			alert.setHeaderText("Veritabanýna baðlanýrken bir hata oluþtu...");
+			alert.show();
+
+			
+		}
+		
+	}
+
+}

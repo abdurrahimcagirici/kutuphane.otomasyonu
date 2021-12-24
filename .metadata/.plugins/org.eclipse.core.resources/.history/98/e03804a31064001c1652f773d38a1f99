@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.GirisEkrani">
+   <children>
+      <Label layoutX="313.0" layoutY="212.0" text="Kullanıcı adı">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="313.0" layoutY="257.0" text="Şifre">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="310.0" layoutY="26.0" prefHeight="28.0" prefWidth="265.0" text="KÜTÜPHANE OTOMASYONU">
+         <font>
+            <Font name="System Bold" size="19.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfKA" layoutX="409.0" layoutY="210.0" />
+      <PasswordField fx:id="pfSifre" layoutX="409.0" layoutY="255.0" />
+      <Button layoutX="411.0" layoutY="323.0" mnemonicParsing="false" text="Giriş Yap" />
+      <ImageView fitHeight="400.0" fitWidth="280.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../img/kutuphane.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="107.0" fitWidth="124.0" layoutX="382.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../img/book.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="410.0" layoutY="361.0" mnemonicParsing="false" onAction="#kayitOl" text="Kayıt Ol" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.GirisEkraniKontrol">
+   <children>
+      <Button fx:id="btnKayit" layoutX="398.0" layoutY="347.0" mnemonicParsing="false" onAction="#kayitOl" prefHeight="25.0" prefWidth="63.0" text="Kayıt Ol" />
+      <Label layoutX="300.0" layoutY="204.0" text="Kullanıcı Adı">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="300.0" layoutY="242.0" text="Şifre">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="326.0" layoutY="34.0" text="Kütüphane Otomasyonu">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="101.0" fitWidth="103.0" layoutX="390.0" layoutY="77.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../img/book.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="400.0" fitWidth="280.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../img/kutuphane.jpg" />
+         </image>
+      </ImageView>
+      <Label fx:id="lblHata" layoutX="300.0" layoutY="271.0" prefHeight="17.0" prefWidth="210.0" textFill="#b51b1b" />
+      <Button fx:id="btnGiris" layoutX="398.0" layoutY="305.0" mnemonicParsing="false" onAction="#giris_yap" text="Giriş Yap" />
+      <TextField fx:id="tfKA" layoutX="398.0" layoutY="200.0" />
+      <PasswordField fx:id="pfSifre" layoutX="398.0" layoutY="238.0" />
+   </children>
+</AnchorPane>

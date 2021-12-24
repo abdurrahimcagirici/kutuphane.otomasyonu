@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="281.0" prefWidth="234.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.KitapSilKontrol">
+   <children>
+      <Button layoutX="86.0" layoutY="224.0" mnemonicParsing="false" onAction="#kitap_sil" text="Kitap Sil" />
+      <Label layoutX="58.0" layoutY="14.0" prefHeight="27.0" prefWidth="115.0" text="KİTAP SİLME">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="91.0" fitWidth="85.0" layoutX="73.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../img/kitapSil.png" />
+         </image>
+      </ImageView>
+      <TextField fx:id="ktpISBN" layoutX="41.0" layoutY="176.0" promptText="ISBN" />
+   </children>
+</AnchorPane>

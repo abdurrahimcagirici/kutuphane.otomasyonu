@@ -1,0 +1,54 @@
+package application;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
+
+public class KitapSilKontrol {
+
+    @FXML
+    private TextField ktpISBN;
+    
+    Connection baglanti;
+    PreparedStatement sorgu;
+    Alert alert;
+  
+
+    @FXML
+    void kitap_sil(ActionEvent event) {
+    	String kitap_isbn = ktpISBN.getText();
+    	
+    	try {
+    		sorgu = baglanti.prepareStatement("delete kitap_isbn from Kitaplar where kitap_isbn =? ");
+			sorgu.setString(1, kitap_isbn);
+	    	int sonuç = sorgu.executeUpdate();
+	    	
+	    	if(sonuç==1) {
+	    		alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Silme");
+				alert.setHeaderText("Kitap silme iþlemi gerçekleþti.");
+				alert.show();
+				
+			}else {
+				alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Hata");
+				alert.setHeaderText("Kitap silme iþlemi gerçekleþtirilemedi...");
+				alert.show();
+
+				
+			}
+	    		 		
+    	}catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+    	
+    }
+
+}

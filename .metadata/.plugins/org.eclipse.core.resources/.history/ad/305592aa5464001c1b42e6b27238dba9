@@ -1,0 +1,147 @@
+package application;
+
+
+
+import java.io.IOException;
+import java.net.URL;
+import java.sql.*;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Stage;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+
+public class GirisEkraniKontrol implements Initializable{
+	
+	@FXML
+    private AnchorPane anchorPane;
+
+	@FXML
+    private Button btnGiris;	
+
+	@FXML
+	private Button btnKayit;
+	
+	@FXML
+    private Label lblHata;
+
+	
+	
+    @FXML
+    private PasswordField pfSifre;
+
+    @FXML
+    private TextField tfKA;
+    
+   
+    
+    Connection baglanti;
+    PreparedStatement sorgu;
+    Alert alert;
+    ResultSet sonuç;
+    
+    @FXML
+    public void kayitOl(ActionEvent event) throws IOException {
+		
+		FXMLLoader loader=new FXMLLoader(getClass().getResource("KayitOl.fxml"));
+		
+		Parent root=loader.load();
+		
+		KayitOlKontrol kok = loader.getController();		
+		
+		Stage stage=new Stage();
+		
+		stage.setScene(new Scene(root));
+		
+		
+		
+		stage.show();
+		
+	}
+    
+    @FXML
+    void giris_yap(ActionEvent event) {
+    	String KA = tfKA.getText();
+    	String KS = pfSifre.getText();
+    	
+
+    	try {
+			sorgu = baglanti.prepareStatement("select from Kullanicilar (kullanici_adi,sifre) values (?,?)");
+			sorgu.setString(1,KA);
+			sorgu.setString(2,KS);
+			int sonuc = sorgu.executeUpdate();
+			if(sonuc==1) {
+				alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Kayýt");
+				alert.setHeaderText("Kayýt gerçekleþti.");
+				alert.show();
+				
+			}else {
+				alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Hata");
+				alert.setHeaderText("Veritabanýna kayýt yaparken bir hata oluþtu...");
+				alert.show();
+
+				
+			}
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+    	
+    }	
+    	
+   
+    
+    
+
+
+		
+
+
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		try {
+			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+			baglanti = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-MKU963U\\SQLEXPRESS;database=kutuphane;integratedSecurity=true");
+			
+			
+		} 
+		
+		catch (Exception e) {
+			alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Hata");
+			alert.setHeaderText("Veritabanýna baðlanýrken bir hata oluþtu...");
+			alert.show();
+
+			
+		}
+		
+	}
+
+
+}
+	
+
+
+			
+			
+    
+    
+
+
+

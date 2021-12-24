@@ -1,0 +1,194 @@
+package application;
+
+
+
+import java.io.IOException;
+import java.net.URL;
+import java.sql.*;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Stage;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+
+public class GirisEkraniKontrol implements Initializable{
+	
+	@FXML
+    private AnchorPane anchorPane;
+
+	@FXML
+    private Button btnGiris;	
+
+	@FXML
+	private Button btnKayit;
+	
+	@FXML
+    private Label lblHata;
+
+	
+	
+    @FXML
+    private PasswordField pfSifre;
+
+    @FXML
+    private TextField tfKA;
+    
+   
+    
+    Connection baglanti;
+    PreparedStatement sorgu;
+    Alert alert;
+    ResultSet sonuç;
+    
+    @FXML
+    public void kayitOl(ActionEvent event) throws IOException {
+		
+		FXMLLoader loader=new FXMLLoader(getClass().getResource("KayitOl.fxml"));
+		
+		Parent root=loader.load();
+		
+		KayitOlKontrol kok = loader.getController();		
+		
+		Stage stage=new Stage();
+		
+		stage.setScene(new Scene(root));
+		
+		
+		
+		stage.show();
+		
+	}
+    
+    @FXML
+    void giris_yap(ActionEvent event) throws IOException{
+    	if(tfKA.getText().equals(KA()) && pfSifre.getText().equals(KS())) {
+    		
+    		Stage stage = (Stage)anchorPane.getScene().getWindow();
+    		stage.close();
+    		Parent root = FXMLLoader.load(getClass().getResource("AnaSayfa.fxml"));
+    		Scene scene = new Scene(root);
+    		stage.setScene(scene);
+    		stage.show();
+    		
+    		
+    	}
+    	else if(tfKA.getText().equals("") && pfSifre.getText().equals("")) {
+    		
+    		lblHata.setText("Kullanýcý adý veya þifre boþ býrakýlamaz.");
+    		
+    		
+    	}
+    	
+    	else {
+    		alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Hata");
+			alert.setHeaderText("Giriþ yapýlamadý.");
+			alert.show();
+
+    	}
+    }	
+    	 private String KA() {
+    	    	String Kullanici_adi = "";
+    	    	
+    	    	try {
+    				sorgu = baglanti.prepareStatement("Select kullanici_adi from Kullanicilar where kullanici_adi =? ");
+    				sorgu.setString(0, tfKA.getText());
+    		    	sonuç = sorgu.executeQuery();
+    		    	
+    		    	if(sonuç.next()) {
+    		    		Kullanici_adi = sonuç.getString(0);
+    		    		sonuç.close();
+    		    		
+    		    	}
+    		    	
+    		    	
+    		    	
+    		    	
+    			} catch (SQLException ex) {
+    				
+    				Logger.getLogger(GirisEkraniKontrol.class.getName()).log(Level.SEVERE,null,ex);
+    				
+    			}
+    	    	return Kullanici_adi;
+    	    	
+    	    }
+    	    
+    	 private String KS() {
+ 	    	String Kullanici_sifre = "";
+ 	    	
+ 	    	try {
+ 				sorgu = baglanti.prepareStatement("Select sifre from Kullanicilar where sifre =? ");
+ 				sorgu.setString(1, pfSifre.getText());;
+ 		    	sonuç = sorgu.executeQuery();
+ 		    	
+ 		    	if(sonuç.next()) {
+ 		    		Kullanici_sifre = sonuç.getString(1);
+ 		    		sonuç.close();
+ 		    		
+ 		    	}
+ 		    	
+ 		    	
+ 		    	
+ 		    	
+ 			} catch (SQLException ex) {
+ 				
+ 				Logger.getLogger(GirisEkraniKontrol.class.getName()).log(Level.SEVERE,null,ex);
+ 				
+ 			}
+ 	    	return Kullanici_sifre;
+ 	    	
+ 	    }
+   
+    
+    
+
+
+		
+
+
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		try {
+			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+			baglanti = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-MKU963U\\SQLEXPRESS;database=kutuphane;integratedSecurity=true");
+			
+			
+		} 
+		
+		catch (Exception e) {
+			alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Hata");
+			alert.setHeaderText("Veritabanýna baðlanýrken bir hata oluþtu...");
+			alert.show();
+
+			
+		}
+		
+	}
+
+
+}
+	
+
+
+			
+			
+    
+    
+
+
+

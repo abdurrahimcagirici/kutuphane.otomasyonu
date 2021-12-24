@@ -1,0 +1,23 @@
+package application;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+
+public class KayitEkrani {
+
+    @FXML
+    private PasswordField pf_Sifre;
+
+    @FXML
+    private TextField tf_KA;
+
+    
+    void kullanici_ekle(ActionEvent event) {
+
+    	
+    	
+    }
+
+}

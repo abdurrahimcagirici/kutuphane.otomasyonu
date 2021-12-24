@@ -1,0 +1,21 @@
+package application;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+
+public class KayitOlKontrol {
+
+    @FXML
+    private PasswordField pf_Sifre;
+
+    @FXML
+    private TextField tf_KA;
+
+    @FXML
+    void actionKE(ActionEvent event) {
+
+    }
+
+}

@@ -1,0 +1,86 @@
+package application;
+
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.ResourceBundle;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
+
+public class KitapEkleKontrol implements Initializable{
+	@FXML
+    private TextField ktpISBN;
+
+    @FXML
+    private TextField ktpAd;
+
+    @FXML
+    private TextField ktpYazar;
+    
+    Connection baglanti;
+    PreparedStatement sorgu;
+    Alert alert;
+
+
+    @FXML
+    void kitap_ekle(ActionEvent event) {
+    	String kitap_isbn = ktpISBN.getText();
+    	String kitap_adi = ktpAd.getText();
+    	String kitap_yazari = ktpYazar.getText();
+    	
+    	try {
+			sorgu = baglanti.prepareStatement("insert into Kitaplar (kitap_isbn,kitap_adi,kitap_yazari) values (?,?,?)");
+			sorgu.setString(1, kitap_isbn);
+			sorgu.setString(2, kitap_adi);
+			sorgu.setString(3, kitap_yazari);
+			int sonuc = sorgu.executeUpdate();
+			if(sonuc==1) {
+				alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Kayýt");
+				alert.setHeaderText("Kayýt gerçekleþti.");
+				alert.show();
+				
+			}else {
+				alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Hata");
+				alert.setHeaderText("Veritabanýna kayýt yaparken bir hata oluþtu...");
+				alert.show();
+
+				
+			}
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+    	
+
+    }
+
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		try {
+			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+			baglanti = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-MKU963U\\SQLEXPRESS;database=kutuphane;integratedSecurity=true");
+			
+		} 
+		
+		catch (Exception e) {
+			alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Hata");
+			alert.setHeaderText("Veritabanýna baðlanýrken bir hata oluþtu...");
+			alert.show();
+
+			
+		}
+		
+	}
+
+}
